@@ -25,11 +25,11 @@
     
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/python-richerr/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="/python-richerr/resources/css/retype.css?v=1.9.685209402877" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/python-richerr/resources/css/retype.css?v=1.9.685228214433" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/python-richerr/resources/js/config.js?v=1.9.685209402877" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/python-richerr/resources/js/config.js?v=1.9.685228214433" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/python-richerr/resources/js/retype.js?v=1.9" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/python-richerr/resources/js/prism.js?v=1.9.685209402877" defer></script>
+    <script id="prism-js" type="text/javascript" src="/python-richerr/resources/js/prism.js?v=1.9.685228214433" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -292,7 +292,7 @@ RichErr.add_conversion(MyTimeoutError, GatewayTimeout)</code></pre>
 class MyTimeoutError(IOError): ...
 
 
-def _convert(err: MyTimeoutError | BaseException):
+def _convert(err: MyTimeoutError):
     return RichErr.from_error(err, message='Something happened', code=500, name='MyTimeoutError')
 
 
