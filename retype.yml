@@ -1,0 +1,43 @@
+input: wiki
+output: .retype
+url: https://adambrianbright.github.io/python-richerr/
+branding:
+  title: RichErr
+  label: python
+meta:
+  title: " | RichErr"
+edit:
+  repo: https://github.com/AdamBrianBright/python-richerr
+  branch: master
+  base: wiki
+  label: Edit on GitHub
+links:
+  - text: Home
+    link: https://adambrianbright.github.io/python-richerr/
+  - text: GitHub
+    link: https://github.com/AdamBrianBright/python-richerr
+  - text: Issues
+    link: https://github.com/AdamBrianBright/python-richerr/issues
+footer:
+  copyright: "© Copyright {{ year }}. [Bogdan Parfenov](https://vk.com/adam_bright) All rights reserved."
+  links:
+    - text: VK
+      link: https://vk.com/adam_bright
+    - text: Email
+      link: "mailto:adam.brian.bright@gmail.com"
+snippets:
+  lineNumbers:
+    - bash
+    - command
+    - js
+    - json
+    - json5
+    - md
+    - py
+    - pyi
+    - sh
+    - toml
+    - ts
+    - txt
+    - yaml
+    - yml
