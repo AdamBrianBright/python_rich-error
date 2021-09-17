@@ -71,21 +71,20 @@ __all__ = [
     'InvalidSSLCertificate',
 ]
 
-version = (0, 1, 0)
+version = (0, 1, 1)
 
 _T = TypeVar('_T', bound='RichErr')
 _E = TypeVar('_E', bound=BaseException)
 
 
-class RichErr(BaseException):
-    _conversions: list[
-        tuple[Type[_E], list[Type[_E]], Type[_T] | Callable[[BaseException], _T]]] = []
+class RichErr(Exception):
+    _conversions: list[tuple[Type[_E], list[Type[_E]], Type[_T] | Callable[[_E], _T]]] = []
     DEFAULT_CODE: int = 500
     DEFAULT_MESSAGE: str = 'Internal Server Error'
     ERRORS: dict[str, Type[_T]] = {}
 
     def __init__(self, message: str | None = None, code: int | None = None,
-                 caused_by: BaseException | None = None, **extras):
+                 caused_by: _E | None = None, **extras):
         self.code: int = self.DEFAULT_CODE if code is None else code
         if message is not None:
             self.message: str = message
@@ -101,13 +100,13 @@ class RichErr(BaseException):
         cls.ERRORS[cls.error_name()] = cls
 
     @classmethod
-    def from_error(cls, err: BaseException, message: str | None = None,
+    def from_error(cls, err: _E, message: str | None = None,
                    code: int | None = None, name: str | None = None) -> _T:
         return cls._from_error(err, message, code, name, err)
 
     @classmethod
-    def _from_error(cls, err: BaseException, message: str | None = None,
-                    code: int | None = None, name: str | None = None, caused_by: BaseException | None = None) -> _T:
+    def _from_error(cls, err: _E, message: str | None = None,
+                    code: int | None = None, name: str | None = None, caused_by: _E | None = None) -> _T:
         exc = cls
         if name is not None:
             exc: Type[_T] = type(name, (RichErr,), {})  # noqa
@@ -116,11 +115,11 @@ class RichErr(BaseException):
         return exc(message, code=code, caused_by=caused_by)
 
     @property
-    def cause(self) -> BaseException | None:
+    def cause(self) -> _E | None:
         return self.__cause__
 
     @cause.setter
-    def cause(self, err: BaseException | None) -> None:
+    def cause(self, err: _E | None) -> None:
         self.__cause__ = err
 
     @property
@@ -140,7 +139,7 @@ class RichErr(BaseException):
         return f'{cls_name}Exception'
 
     @classmethod
-    def add_conversion(cls, exc_type: Type[_E], to: Type['RichErr'] | Callable[[BaseException], 'RichErr']) -> None:
+    def add_conversion(cls, exc_type: Type[_E], to: Type[_T] | Callable[[_E], _T]) -> None:
         mro = exc_type.mro()[:-1]
         idx = 0
         for i, (t, m, f) in enumerate(cls._conversions):
@@ -156,7 +155,7 @@ class RichErr(BaseException):
         cls._conversions = [i for i in cls._conversions if i[0] is not exc_type]
 
     @classmethod
-    def convert(cls, err: BaseException) -> _T:
+    def convert(cls, err: _E) -> _T:
         if isinstance(err, RichErr):
             return err
         for t, _, f in cls._conversions:
@@ -409,7 +408,7 @@ RichErr.add_conversion(KeyError, NotFound)
 RichErr.add_conversion(http.client.HTTPException, InternalServerError)
 
 if DRFValidationError is not None:
-    def _convert(err: DRFValidationError | BaseException) -> _T:
+    def _convert(err: DRFValidationError) -> _T:
         detail = err.detail
         field = ''
         if isinstance(detail, list):
@@ -425,7 +424,7 @@ if DRFValidationError is not None:
     RichErr.add_conversion(DRFValidationError, _convert)
 
 if DjangoValidationError is not None:
-    def _convert(err: DjangoValidationError | BaseException) -> _T:
+    def _convert(err: DjangoValidationError) -> _T:
         message = list(err)
         if not message:
             message = str(err.message)

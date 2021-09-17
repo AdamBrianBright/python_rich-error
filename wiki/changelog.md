@@ -9,7 +9,19 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Expected: unknown
 
-## `0.1.0` [!badge variant="info" text="LATEST"]
+## `0.1.1` [!badge variant="info" text="LATEST"]
+
+Released: 2021-09-18
+
+### Changed
+
+- [x] Base error now inherits `Exception` instead of `BaseException`
+
+### Fixed
+
+- [x] Fixed typing issues with `add_conversion` like methods
+
+## `0.1.0`
 
 Released: 2021-09-17
 

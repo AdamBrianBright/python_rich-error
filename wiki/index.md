@@ -76,7 +76,7 @@ from richerr import RichErr
 class MyTimeoutError(IOError): ...
 
 
-def _convert(err: MyTimeoutError | BaseException):
+def _convert(err: MyTimeoutError):
     return RichErr.from_error(err, message='Something happened', code=500, name='MyTimeoutError')
 
 
