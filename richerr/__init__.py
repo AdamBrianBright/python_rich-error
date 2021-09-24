@@ -71,7 +71,7 @@ __all__ = [
     'InvalidSSLCertificate',
 ]
 
-version = (0, 1, 1)
+version = (0, 1, 2)
 
 _T = TypeVar('_T', bound='RichErr')
 _E = TypeVar('_E', bound=BaseException)
@@ -112,6 +112,8 @@ class RichErr(Exception):
             exc: Type[_T] = type(name, (RichErr,), {})  # noqa
         if message is None:
             message = str(err)
+        if code is None:
+            code = cls.DEFAULT_CODE
         return exc(message, code=code, caused_by=caused_by)
 
     @property

@@ -9,7 +9,7 @@ import richerr
             'exception': 'BadRequestException',
             'message': 'Hello world',
             'caused_by': {'error': {
-                'code': 500, 'exception': 'ValueErrorException', 'message': 'Hello world', 'caused_by': None,
+                'code': 400, 'exception': 'ValueErrorException', 'message': 'Hello world', 'caused_by': None,
             }},
         }}),
 ))

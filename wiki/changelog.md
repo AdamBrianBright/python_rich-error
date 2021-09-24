@@ -9,7 +9,15 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Expected: unknown
 
-## `0.1.1` [!badge variant="info" text="LATEST"]
+## `0.1.2` [!badge variant="info" text="LATEST"]
+
+Released: 2021-09-24
+
+### Fixed
+
+- [x] Fixed error conversion losing default code
+
+## `0.1.1`
 
 Released: 2021-09-18
 
