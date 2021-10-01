@@ -1,18 +1,17 @@
+[run]
+branch = True
+source = richerr
+
 [report]
 show_missing = True
-omit =
-    */migrations/*
 
 exclude_lines =
-
     raise AssertionError.*
     raise NotImplementedError.*
     except.*KeyboardInterrupt.*
     except.*CancelledError.*
     except.*StreamClosedError.*
     except.*ImportError.*
-
     pass
-
     if 0:
     if __name__ == .__main__.:
