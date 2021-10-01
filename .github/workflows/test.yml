@@ -25,7 +25,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry wheel
           poetry config experimental.new-installer false
-          poetry install -E djantic
+          poetry install
       - name: Test with pytest + generate coverage
         shell: bash
         run: |
