@@ -16,20 +16,22 @@
     <meta property="og:url" content="https://adambrianbright.github.io/python-richerr/">
     <meta property="og:title" content="Welcome | RichErr">
     <meta property="og:description" content="RichErr is a tiny module that gives you basic error class, which can be used in JSON, dict, list, and other mutation">
+    <meta property="og:image" content="https://badge.fury.io/py/richerr.svg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://adambrianbright.github.io/python-richerr/">
     <meta property="twitter:title" content="Welcome | RichErr">
     <meta property="twitter:description" content="RichErr is a tiny module that gives you basic error class, which can be used in JSON, dict, list, and other mutation">
+    <meta property="twitter:image" content="https://badge.fury.io/py/richerr.svg">
     
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/python-richerr/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="/python-richerr/resources/css/retype.css?v=1.9.685807669876" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/python-richerr/resources/css/retype.css?v=1.10.686447482772" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/python-richerr/resources/js/config.js?v=1.9.685807669876" defer data-turbo-track="reload"></script>
-    <script type="text/javascript" src="/python-richerr/resources/js/retype.js?v=1.9" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/python-richerr/resources/js/prism.js?v=1.9.685807669876" defer></script>
+    <script type="text/javascript" src="/python-richerr/resources/js/config.js?v=1.10.686447482772" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/python-richerr/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
+    <script id="prism-js" type="text/javascript" src="/python-richerr/resources/js/prism.js?v=1.10.686447482772" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -193,6 +195,7 @@
         <span>Welcome</span>
     </h1>
 </doc-anchor-target>
+<p><a href="https://badge.fury.io/py/richerr"><img src="https://badge.fury.io/py/richerr.svg" alt="PyPI version" /></a>  <a href="https://codecov.io/gh/AdamBrianBright/python-richerr"><img src="https://codecov.io/gh/AdamBrianBright/python-richerr/branch/master/graph/badge.svg?token=DDBNKVLZWH" alt="codecov" /></a> <a href="https://app.fossa.com/projects/git%2Bgithub.com%2FAdamBrianBright%2Fpython-richerr?ref=badge_shield"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FAdamBrianBright%2Fpython-richerr.svg?type=shield" alt="FOSSA Status" /></a></p>
 <doc-anchor-target id="richerr">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#richerr">#</doc-anchor-trigger>
@@ -210,12 +213,12 @@ print(RichErr.convert(ValueError('Hello world!')).json(indent=2))</code></pre>
 <pre class="language-json5"><code v-pre class="language-json5">{
   &quot;error&quot;: {
     &quot;code&quot;: 400,
-    &quot;exception&quot;: &quot;BadRequestException&quot;,
+    &quot;exception&quot;: &quot;BadRequest&quot;,
     &quot;message&quot;: &quot;Hello world!&quot;,
     &quot;caused_by&quot;: {
       &quot;error&quot;: {
         &quot;code&quot;: 500,
-        &quot;exception&quot;: &quot;ValueErrorException&quot;,
+        &quot;exception&quot;: &quot;ValueError&quot;,
         &quot;message&quot;: &quot;Hello world!&quot;,
         &quot;caused_by&quot;: null
       }
@@ -315,6 +318,7 @@ RichErr.add_conversion(MyTimeoutError, _convert)</code></pre>
         </div>
     </div>
 </div>
+<p><a href="https://app.fossa.com/projects/git%2Bgithub.com%2FAdamBrianBright%2Fpython-richerr?ref=badge_large"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FAdamBrianBright%2Fpython-richerr.svg?type=large" alt="FOSSA Status" /></a></p>
 
 
 
@@ -394,6 +398,6 @@ RichErr.add_conversion(MyTimeoutError, _convert)</code></pre>
 
         <div id="docs-overlay-target"></div>
 
-        <script>window.__DOCS__ = { "title": "Welcome", icon: "file", hasPrism: true, hasMermaid: false }</script>
+        <script>window.__DOCS__ = { "title": "Welcome", icon: "file", hasPrism: true, hasMermaid: false, hasMath: false }</script>
     </body>
 </html>
