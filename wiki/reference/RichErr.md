@@ -2,7 +2,7 @@
 
 ## BaseClass
 
-> _class_ **richerr.RichErr**_(message: str | None, code: int | None, caused_by: BaseException | None, **kwargs)_
+> _class_ **richerr.RichErr**_(message: str | bytes | None, code: int | None, caused_by: BaseException | None, **kwargs)_
 
 **Parameters:**
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "RichErr"
-version = "0.1.2"
+version = "0.2.0"
 description = "Rich errors (sort of)"
 authors = ["Bogdan Parfenov <adam.brian.bright@gmail.com>"]
 license = "MIT"

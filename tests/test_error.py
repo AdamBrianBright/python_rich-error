@@ -6,10 +6,10 @@ import richerr
 @mark.parametrize('inp, res', (
         (ValueError('Hello world'), {'error': {
             'code': 400,
-            'exception': 'BadRequestException',
+            'exception': 'BadRequest',
             'message': 'Hello world',
             'caused_by': {'error': {
-                'code': 400, 'exception': 'ValueErrorException', 'message': 'Hello world', 'caused_by': None,
+                'code': 400, 'exception': 'ValueError', 'message': 'Hello world', 'caused_by': None,
             }},
         }}),
 ))

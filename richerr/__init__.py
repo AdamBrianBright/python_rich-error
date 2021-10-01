@@ -15,6 +15,11 @@ try:
 except ImportError:
     DRFValidationError = None
 
+try:
+    from pydantic import ValidationError as PydanticError
+except ImportError:
+    PydanticError = None
+
 __all__ = [
     'version',
     'RichErr',
@@ -83,9 +88,11 @@ class RichErr(Exception):
     DEFAULT_MESSAGE: str = 'Internal Server Error'
     ERRORS: dict[str, Type[_T]] = {}
 
-    def __init__(self, message: str | None = None, code: int | None = None,
+    def __init__(self, message: str | bytes | None = None, code: int | None = None,
                  caused_by: _E | None = None, **extras):
         self.code: int = self.DEFAULT_CODE if code is None else code
+        if isinstance(message, bytes):
+            message = message.decode('utf-8')
         if message is not None:
             self.message: str = message
         elif self.code in http.client.responses:
@@ -100,14 +107,16 @@ class RichErr(Exception):
         cls.ERRORS[cls.error_name()] = cls
 
     @classmethod
-    def from_error(cls, err: _E, message: str | None = None,
-                   code: int | None = None, name: str | None = None) -> _T:
+    def from_error(cls, err: _E, message: str | bytes | None = None,
+                   code: int | None = None, name: str | bytes | None = None) -> _T:
         return cls._from_error(err, message, code, name, err)
 
     @classmethod
-    def _from_error(cls, err: _E, message: str | None = None,
-                    code: int | None = None, name: str | None = None, caused_by: _E | None = None) -> _T:
+    def _from_error(cls, err: _E, message: str | bytes | None = None,
+                    code: int | None = None, name: str | bytes | None = None, caused_by: _E | None = None) -> _T:
         exc = cls
+        if isinstance(name, bytes):
+            name = name.decode('utf-8')
         if name is not None:
             exc: Type[_T] = type(name, (RichErr,), {})  # noqa
         if message is None:
@@ -136,9 +145,7 @@ class RichErr(Exception):
     @classmethod
     def error_name(cls) -> str:
         cls_name = cls.__name__
-        if cls_name.endswith('Exception'):
-            return cls_name
-        return f'{cls_name}Exception'
+        return cls_name.removesuffix('Exception')
 
     @classmethod
     def add_conversion(cls, exc_type: Type[_E], to: Type[_T] | Callable[[_E], _T]) -> None:
@@ -441,3 +448,13 @@ if DjangoValidationError is not None:
 
     RichErr.add_conversion(DjangoValidationError, _convert)
     RichErr.add_conversion(ObjectDoesNotExist, NotFound)
+
+if PydanticError is not None:
+    def _convert(err: PydanticError):
+        error = err.errors()[0]
+        loc = ' -> '.join(str(e) for e in error['loc'])
+        message = f'"{loc}": {error["msg"]}'
+        return BadRequest.from_error(err, message=message, name='ValidationError')
+
+
+    RichErr.add_conversion(PydanticError, _convert)
