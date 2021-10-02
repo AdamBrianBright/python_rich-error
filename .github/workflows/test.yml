@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
     tags:
-      - "\d+\.\d+\.\d+"
+      - "*.*.*"
   pull_request:
     branches: [ master ]
 
