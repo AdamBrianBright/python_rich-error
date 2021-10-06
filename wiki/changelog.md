@@ -9,7 +9,15 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Expected: unknown
 
-## `0.2.0` [!badge variant="info" text="LATEST"]
+## `0.2.1` [!badge variant="info" text="LATEST"]
+
+Released: 2021-10-06
+
+### Changed
+
+- [x] Updated python to 3.10.0
+
+## `0.2.0`
 
 Released: 2021-10-02
 

@@ -76,7 +76,7 @@ __all__ = [
     'InvalidSSLCertificate',
 ]
 
-version = (0, 1, 2)
+version = (0, 2, 1)
 
 _T = TypeVar('_T', bound='RichErr')
 _E = TypeVar('_E', bound=BaseException)
