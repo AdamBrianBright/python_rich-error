@@ -1,8 +1,11 @@
 test:
-	poetry run pytest -s -rf -vv  --log-level=debug --cov-config=.coveragerc --cov richerr tests
-	poetry run python -m coverage xml -i
+	poetry run python -m coverage run || exit $?
+	poetry run python -m coverage report
 	poetry run python -m coverage html -i
-	poetry run python -m coverage report > coverage.txt
+	echo 'DONE';
+
+test-debug:
+	poetry run python -m pytest -s -rf -vv -x tests
 
 publish:
 	poetry publish --build

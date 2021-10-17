@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "RichErr"
-version = "0.2.1"
+version = "0.2.2"
 description = "Rich errors (sort of)"
 authors = ["Bogdan Parfenov <adam.brian.bright@gmail.com>"]
 license = "MIT"
@@ -47,7 +47,7 @@ djangorestframework = "^3.12.4"
 Django = ">=2.0,<4.0"
 pydantic = "^1.8.2"
 pytest = "^6.2.5"
-pytest-cov = "^2.12.1"
+coverage = "^6.0.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -76,7 +76,7 @@ __all__ = [
     'InvalidSSLCertificate',
 ]
 
-version = (0, 2, 1)
+version = (0, 2, 2)
 
 _T = TypeVar('_T', bound='RichErr')
 _E = TypeVar('_E', bound=BaseException)
@@ -174,6 +174,12 @@ class RichErr(Exception):
                 else:
                     return f(err)
         return InternalServerError.from_error(err)
+
+    def __str__(self) -> str:
+        return f'{self.error_name()}({self.code}): {self.message}'
+
+    def __repr__(self) -> str:
+        return f'{self.__class__.__qualname__}(message={self.message}, code={self.code}, caused_by={self.caused_by}, **{self.extras})'
 
     @property
     def __dict__(self) -> dict:

@@ -9,7 +9,15 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Expected: unknown
 
-## `0.2.1` [!badge variant="info" text="LATEST"]
+## `0.2.2` [!badge variant="info" text="LATEST"]
+
+Released: 2021-10-17
+
+### Added
+
+- [x] Added `__str__` and `__repr__` methods for base error class
+
+## `0.2.1`
 
 Released: 2021-10-06
 
