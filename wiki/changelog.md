@@ -9,7 +9,15 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Expected: unknown
 
-## `0.2.2` [!badge variant="info" text="LATEST"]
+## `0.2.3` [!badge variant="info" text="LATEST"]
+
+Released: 2021-11-27
+
+### Fixed
+
+- [x] Fixed `Unhashable Type RichErr` was causing rollbar troubles with reporting RichErr exceptions
+
+## `0.2.2`
 
 Released: 2021-10-17
 

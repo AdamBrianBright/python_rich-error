@@ -76,7 +76,7 @@ __all__ = [
     'InvalidSSLCertificate',
 ]
 
-version = (0, 2, 2)
+version = (0, 2, 3)
 
 _T = TypeVar('_T', bound='RichErr')
 _E = TypeVar('_E', bound=BaseException)
@@ -195,6 +195,9 @@ class RichErr(Exception):
 
     def __iter__(self) -> Iterable[tuple[str, Any]]:
         yield from self.__dict__.items()
+
+    def __hash__(self):
+        return hash(self.json())
 
     def dict(self) -> dict:
         return self.__dict__

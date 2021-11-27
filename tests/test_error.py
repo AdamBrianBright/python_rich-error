@@ -57,3 +57,10 @@ import richerr
 ))
 def test_conversion(inp, res):
     assert richerr.RichErr.convert(inp).dict() == res
+
+
+@mark.parametrize('err', (
+    richerr.RichErr(),
+))
+def test_is_hashable(err):
+    assert hash(err)
