@@ -46,7 +46,7 @@ pip install RichErr
 
 ## Requirements
 
-- [x] Python 3.10+
+- [x] Python 3.12+
 - [x] No package dependencies
 
 ## Plugins

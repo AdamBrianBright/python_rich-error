@@ -3,6 +3,8 @@ import http.client
 import json
 from typing import Any, Callable, Iterable, Type, TypeVar
 
+from rest_framework.utils.serializer_helpers import ReturnList, ReturnDict
+
 try:
     from django.core.exceptions import ValidationError as DjangoValidationError
     from django.core.exceptions import ObjectDoesNotExist
@@ -11,7 +13,7 @@ except ImportError:
     ObjectDoesNotExist = None
 
 try:
-    from rest_framework.exceptions import ValidationError as DRFValidationError
+    from rest_framework.exceptions import ValidationError as DRFValidationError, ErrorDetail
 except ImportError:
     DRFValidationError = None
 
@@ -135,11 +137,11 @@ class RichErr(Exception):
 
     @property
     def caused_by(self) -> dict | None:
-        cause = self.__cause__
+        cause: _E = self.cause
         if cause is None:
             return None
         if isinstance(cause, RichErr):
-            return dict(cause)
+            return cause.dict()
         return dict(self._from_error(cause, name=type(cause).__name__))
 
     @classmethod
@@ -179,7 +181,8 @@ class RichErr(Exception):
         return f'{self.error_name()}({self.code}): {self.message}'
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__qualname__}(message={self.message}, code={self.code}, caused_by={self.caused_by}, **{self.extras})'
+        args = f'message={self.message}, code={self.code}, caused_by={self.caused_by}, **{self.extras}'
+        return f'{self.__class__.__qualname__}({args})'
 
     @property
     def __dict__(self) -> dict:
@@ -203,10 +206,10 @@ class RichErr(Exception):
         return self.__dict__
 
     def json(self, **kwargs) -> str:
-        return json.dumps(dict(self), **kwargs)
+        return json.dumps(vars(self), **kwargs)
 
     def __eq__(self, other) -> bool:
-        return dict(self) == vars(other)
+        return vars(self) == vars(other)
 
 
 RichErr.ERRORS[RichErr.error_name()] = RichErr
@@ -428,15 +431,15 @@ RichErr.add_conversion(http.client.HTTPException, InternalServerError)
 if DRFValidationError is not None:
     def _convert(err: DRFValidationError) -> _T:
         detail = err.detail
-        field = ''
-        if isinstance(detail, list):
-            detail = next(iter(detail), err.default_detail)
-        elif isinstance(detail, dict):
-            detail = next(iter(detail.items()), (None, err.default_detail))
-            field = f'{detail[0]}: '
-            detail = detail[1][0]
-
-        return NotAcceptable.from_error(err, f'{field}{detail!s}')
+        match detail:
+            case detail_list if isinstance(detail, (list, ReturnList)):
+                res = next(iter(detail_list), err.default_detail)
+                return NotAcceptable.from_error(err, str(res))
+            case detail_dict if isinstance(detail, (dict, ReturnDict)):
+                part = next(iter(detail_dict.items()), (None, err.default_detail))
+                return NotAcceptable.from_error(err, str(part))
+            case _:
+                return NotAcceptable.from_error(err, str(detail))
 
 
     RichErr.add_conversion(DRFValidationError, _convert)
